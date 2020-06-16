@@ -1,12 +1,12 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as React from 'react';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as React from "react";
 
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import TabBarIcon from "../components/TabBarIcon";
+import DropInScreen from "../screens/DropInScreen";
+import ComponentsScreen from "../screens/ComponentsScreen";
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = "Home";
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -17,19 +17,23 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="DropIn"
+        component={DropInScreen}
         options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: "Drop In",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="logo-buffer" />
+          ),
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Components"
+        component={ComponentsScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: "Components",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-card" />
+          ),
         }}
       />
     </BottomTab.Navigator>
@@ -37,12 +41,13 @@ export default function BottomTabNavigator({ navigation, route }) {
 }
 
 function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+  const routeName =
+    route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
+    case "DropIn":
+      return "Drop In Component";
+    case "Components":
+      return "Individual Payment Components";
   }
 }
