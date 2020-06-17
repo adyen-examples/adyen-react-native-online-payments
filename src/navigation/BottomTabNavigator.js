@@ -2,11 +2,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 
 import TabBarIcon from "../components/TabBarIcon";
-import DropInScreen from "../screens/DropInScreen";
+import PayByLinkScreen from "../screens/PayByLinkScreen";
 import ComponentsScreen from "../screens/ComponentsScreen";
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = "Home";
+const INITIAL_ROUTE_NAME = "PayByLink";
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -17,10 +17,10 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="DropIn"
-        component={DropInScreen}
+        name="PayByLink"
+        component={PayByLinkScreen}
         options={{
-          title: "Drop In",
+          title: "Pay by Link",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="logo-buffer" />
           ),
@@ -30,7 +30,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Components"
         component={ComponentsScreen}
         options={{
-          title: "Components",
+          title: "API only",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-card" />
           ),
@@ -45,9 +45,9 @@ function getHeaderTitle(route) {
     route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
-    case "DropIn":
-      return "Drop In Component";
+    case "PayByLink":
+      return "Pay by Link integration";
     case "Components":
-      return "Individual Payment Components";
+      return "Components with API only";
   }
 }
