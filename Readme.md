@@ -2,7 +2,7 @@
 
 This repository includes examples of React Native application integrations for online payments with Adyen. Within this demo app, you'll find a simplified version of an e-commerce cart and checkout, complete with commented code to highlight key features and concepts of Adyen's API. Have a look at the underlying code to see how you can integrate Adyen in your Android/iOS/PWA application to give your shoppers the option to pay with their preferred payment methods, all in a seamless checkout experience. The integration is done using React Native.
 
-![Card checkout demo](./cardcheckout.gif)
+![Card checkout demo](./paybylink.gif)
 
 ## Supported Demo Integrations
 
@@ -62,7 +62,7 @@ This will start the express server and print out the server URL
 npm run server
 ```
 
-3. Copy the server URL and set it as `SERVER_URL` in `src/constants/General.js`, it is the IP of the machine where you started the express backend server with `npm run server`. It will be the same IP used by [Expo](https://expo.io/) to run the React Native application as well when you run the next step
+3. Copy the server URL and set it as `SERVER_URL` in `src/Service.js`, it is the IP of the machine where you started the express backend server with `npm run server`. It will be the same IP used by [Expo](https://expo.io/) to run the React Native application as well when you run the next step
 
 4. Open another terminal to the same location and start the React Native application using [Expo](https://expo.io/). You can run the command appropriate for the platform you like
 
