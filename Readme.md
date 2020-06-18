@@ -80,11 +80,11 @@ To try out integrations with test card numbers and payment method details, see [
 
 You can customize the payment form with your brand name, logo, and a background color.
 
-    1. Log in to your [Customer Area](https://ca-test.adyen.com/).
-    2. Select Account. Under Configure, select Pay by Link.
-    3. Select the web service user.
-    4. Add a display name, upload a brand logo, and set a background color.
-    5. You will receive a confirmation that the payment form has been updated.
+ 1. Log in to your [Customer Area](https://ca-test.adyen.com/).
+ 2. Select Account. Under Configure, select Pay by Link.
+ 3. Select the web service user.
+ 4. Add a display name, upload a brand logo, and set a background color.
+ 5. You will receive a confirmation that the payment form has been updated.
 
 ## Contributing
 
