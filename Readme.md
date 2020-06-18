@@ -18,6 +18,8 @@ Demos of the following client-side integrations are currently available in this 
   - [ ] PaySafeCard
   - [ ] Klarna Pay later
 
+**Note**: You need to [setup a webhook](https://docs.adyen.com/development-resources/webhooks) if you want to handle the results from Pay by Link.
+
 - [API only](https://docs.adyen.com/checkout/api-only)
   - [ ] Ideal
   - [ ] Credit card
@@ -80,11 +82,11 @@ To try out integrations with test card numbers and payment method details, see [
 
 You can customize the payment form with your brand name, logo, and a background color.
 
- 1. Log in to your [Customer Area](https://ca-test.adyen.com/).
- 2. Select Account. Under Configure, select Pay by Link.
- 3. Select the web service user.
- 4. Add a display name, upload a brand logo, and set a background color.
- 5. You will receive a confirmation that the payment form has been updated.
+1.  Log in to your [Customer Area](https://ca-test.adyen.com/).
+2.  Select Account. Under Configure, select Pay by Link.
+3.  Select the web service user.
+4.  Add a display name, upload a brand logo, and set a background color.
+5.  You will receive a confirmation that the payment form has been updated.
 
 ## Contributing
 
