@@ -1,13 +1,13 @@
 import * as Linking from 'expo-linking';
 
 export default {
-  prefixes: [Linking.makeUrl('/')],
+  prefixes: [Linking.makeUrl("/")],
   config: {
     Root: {
-      path: 'root',
+      path: "root",
       screens: {
-        DropIn: 'dropin',
-        Components: 'components',
+        PayByLink: "paybylink",
+        Components: "components",
       },
     },
   },
