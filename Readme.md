@@ -2,7 +2,7 @@
 
 This repository includes examples of React Native application integrations for online payments with Adyen. Within this demo app, you'll find a simplified version of an e-commerce cart and checkout, complete with commented code to highlight key features and concepts of Adyen's API. Have a look at the underlying code to see how you can integrate Adyen in your Android/iOS/PWA application to give your shoppers the option to pay with their preferred payment methods, all in a seamless checkout experience. The integration is done using React Native.
 
-![Card checkout demo](./paybylink.gif)
+![Pay by Link demo](./paybylink.gif)
 
 ## Supported Demo Integrations
 
