@@ -14,9 +14,9 @@ Demos of the following client-side integrations are currently available in this 
 
   - [x] Ideal
   - [x] Credit card
-  - [ ] Credit card 3DS2
-  - [ ] PaySafeCard
-  - [ ] Klarna Pay later
+  - [x] Credit card 3DS2
+  - [x] PaySafeCard
+  - [x] Klarna Pay later
 
 **Note**: You need to [setup a webhook](https://docs.adyen.com/development-resources/webhooks) if you want to handle the results from Pay by Link.
 

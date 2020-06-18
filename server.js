@@ -108,6 +108,26 @@ app.post("/api/getPaymentLinks", async (req, res) => {
       countryCode: "NL",
       shopperReference: "DEMO_USER",
       shopperEmail: "test@email.com",
+      lineItems: [
+        {
+          quantity: "1",
+          amountExcludingTax: "331",
+          taxPercentage: "2100",
+          description: "Sunglasses",
+          id: "Item 1",
+          taxAmount: "69",
+          amountIncludingTax: "400",
+        },
+        {
+          quantity: "1",
+          amountExcludingTax: "248",
+          taxPercentage: "2100",
+          description: "Headphones",
+          id: "Item 2",
+          taxAmount: "52",
+          amountIncludingTax: "300",
+        },
+      ],
     });
     res.json(response);
   } catch (err) {
