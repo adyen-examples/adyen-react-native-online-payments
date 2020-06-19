@@ -128,6 +128,9 @@ export function CardScreen({ navigation, payment, initiatePayment }) {
           maxLength={26}
         />
       </View>
+      <View style={styles.cardItemContainer}>
+        <Text>Works only if you are fully PCI compliant</Text>
+      </View>
       <View style={styles.payButtonContainer}>
         <Button
           onPress={handlePayment}
