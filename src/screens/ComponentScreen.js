@@ -24,8 +24,10 @@ export function ComponentScreen({
     switch (type) {
       case "scheme":
         navigation.navigate("Card");
+        break;
       case "ideal":
-        navigation.navigate("Card");
+        navigation.navigate("IDeal");
+        break;
     }
   };
 
@@ -49,7 +51,7 @@ function getHeaderTitle(type) {
     case "scheme":
       return "Credit Card integration";
     case "ideal":
-      return "iDeal integration";
+      return "iDEAL integration";
   }
 }
 

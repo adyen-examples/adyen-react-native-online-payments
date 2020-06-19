@@ -12,32 +12,8 @@ export const slice = createSlice({
     paymentMethodInUse: null,
     paymentRes: null,
     paymentDetailsRes: null,
-    // config: {
-    //   paymentMethodsConfiguration: {
-    //     ideal: {
-    //       showImage: true,
-    //     },
-    //     card: {
-    //       hasHolderName: true,
-    //       holderNameRequired: true,
-    //       name: "Credit or debit card",
-    //       amount: {
-    //         value: 1000, // 10€ in minor units
-    //         currency: "EUR",
-    //       },
-    //     },
-    //   },
-    //   locale: "en_NL",
-    //   showPayButton: true,
-    // },
   },
   reducers: {
-    // config: (state, action) => {
-    //   state.config = {
-    //     ...state.config,
-    //     ...action.payload,
-    //   };
-    // },
     paymentLinks: (state, action) => {
       const [res, status] = action.payload;
       if (status >= 300) {
@@ -82,7 +58,6 @@ export const slice = createSlice({
 
 export const {
   setBilling,
-  //   config,
   paymentMethods,
   paymentMethodInUse,
   payments,
@@ -90,10 +65,6 @@ export const {
   paymentLinks,
 } = slice.actions;
 
-// export const getAdyenConfig = () => async (dispatch) => {
-//   const response = await fetch(`${SERVER_URL}/api/config`);
-//   dispatch(config(await response.json()));
-// };
 export const setPaymentMethodInUse = (type) => (dispatch) => {
   dispatch(paymentMethodInUse(type));
 };

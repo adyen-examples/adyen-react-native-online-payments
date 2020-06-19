@@ -22,7 +22,7 @@ Demos of the following client-side integrations are currently available in this 
 
 - [API only](https://docs.adyen.com/checkout/api-only)
   - [ ] Ideal
-  - [ ] Credit card
+  - [x] Credit card [PCI compliant only]
 
 The demo leverages Adyen's API Library for Node.js ([GitHub](https://github.com/Adyen/adyen-node-api-library) | [Docs](https://docs.adyen.com/development-resources/libraries#javascript)) on the server side.
 

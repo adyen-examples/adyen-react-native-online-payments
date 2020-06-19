@@ -10,7 +10,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "adyen.examples.demo",
+    "scheme": "adyendemo",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",

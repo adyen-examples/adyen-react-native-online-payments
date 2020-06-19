@@ -155,34 +155,14 @@ app.post("/api/initiatePayment", async (req, res) => {
         // @ts-ignore
         allow3DS2: true,
       },
-      returnUrl: "http://localhost:8080/api/handleShopperRedirect",
+      //   returnUrl: "adyendemo://", // use this if deploying as standalone app
+      returnUrl: "exp://localhost:19000",
       browserInfo: req.body.browserInfo,
       paymentMethod: req.body.paymentMethod,
       billingAddress: req.body.billingAddress,
       origin: req.body.origin,
     });
-    console.log(response);
-    let paymentMethodType = req.body.paymentMethod.type;
-    let resultCode = response.resultCode;
-    let redirectUrl =
-      response.redirect !== undefined ? response.redirect.url : null;
-    let action = null;
-
-    if (response.action) {
-      action = response.action;
-      res.cookie("paymentData", action.paymentData, {
-        maxAge: 900000,
-        httpOnly: true,
-      });
-      const originalHost = new URL(req.headers["referer"]);
-      originalHost &&
-        res.cookie("originalHost", originalHost.origin, {
-          maxAge: 900000,
-          httpOnly: true,
-        });
-    }
-
-    res.json({ paymentMethodType, resultCode, redirectUrl, action });
+    res.json(response);
   } catch (err) {
     console.error(`Error: ${err.message}, error code: ${err.errorCode}`);
     res.status(err.statusCode).json(err.message);

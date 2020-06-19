@@ -10,6 +10,7 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import LinkingConfiguration from "./navigation/LinkingConfiguration";
 import ComponentScreen from "./screens/ComponentScreen";
 import CardScreen from "./screens/CardScreen";
+import IDealScreen from "./screens/IdealScreen";
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export default function Main() {
               <Stack.Screen name="Root" component={BottomTabNavigator} />
               <Stack.Screen name="Component" component={ComponentScreen} />
               <Stack.Screen name="Card" component={CardScreen} />
+              <Stack.Screen name="IDeal" component={IDealScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </View>

@@ -29,7 +29,7 @@ export function ComponentListScreen({ navigation, paymentMethods }) {
 
       <OptionButton
         icon="md-cash"
-        label="iDeal"
+        label="iDEAL"
         onPress={handleClick("ideal")}
         isLastOption
       />
