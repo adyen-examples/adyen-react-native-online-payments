@@ -1,12 +1,24 @@
 import * as React from "react";
 import { StyleSheet, Button, View, SafeAreaView, Text } from "react-native";
+import { connect } from "react-redux";
 
 import { Cart } from "../components/ShoppingCart";
+import { setPaymentMethodInUse } from "../store/PaymentSlice";
 
-export default function ComponentScreen({ route, navigation }) {
+export function ComponentScreen({
+  route,
+  navigation,
+  payment,
+  paymentMethodInUse,
+}) {
   const { type } = route.params;
-  
+
   navigation.setOptions({ headerTitle: getHeaderTitle(type) });
+
+  // React to paymentMethods updates
+  React.useEffect(() => {
+    paymentMethodInUse(type);
+  }, [payment.paymentMethodsRes]);
 
   const handlePayment = () => {
     switch (type) {
@@ -40,6 +52,13 @@ function getHeaderTitle(type) {
       return "iDeal integration";
   }
 }
+
+const mapStateToProps = (state) => ({
+  payment: state.payment,
+});
+const mapDispatchToProps = { paymentMethodInUse: setPaymentMethodInUse };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComponentScreen);
 
 const styles = StyleSheet.create({
   container: {

@@ -2,12 +2,20 @@ import * as React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
+import { connect } from "react-redux";
 
-export default function ComponentListScreen({ navigation }) {
+import { getPaymentMethods } from "../store/PaymentSlice";
+
+export function ComponentListScreen({ navigation, paymentMethods }) {
+  // fetch payment methods
+  React.useEffect(() => {
+    paymentMethods();
+  }, []);
+
   const handleClick = (type) => () => {
     navigation.navigate("Component", { type });
   };
-  
+
   return (
     <ScrollView
       style={styles.container}
@@ -46,6 +54,10 @@ function OptionButton({ icon, label, onPress, isLastOption }) {
     </RectButton>
   );
 }
+
+const mapDispatchToProps = { paymentMethods: getPaymentMethods };
+
+export default connect(null, mapDispatchToProps)(ComponentListScreen);
 
 const styles = StyleSheet.create({
   container: {

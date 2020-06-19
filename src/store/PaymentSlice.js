@@ -9,6 +9,7 @@ export const slice = createSlice({
     error: "",
     paymentLinksRes: null,
     paymentMethodsRes: null,
+    paymentMethodInUse: null,
     paymentRes: null,
     paymentDetailsRes: null,
     // config: {
@@ -53,6 +54,13 @@ export const slice = createSlice({
         state.paymentMethodsRes = res;
       }
     },
+    paymentMethodInUse: (state, action) => {
+      if (state.paymentMethodsRes && state.paymentMethodsRes.paymentMethods) {
+        state.paymentMethodInUse = state.paymentMethodsRes.paymentMethods.filter(
+          (it) => it.type === action.payload
+        );
+      }
+    },
     payments: (state, action) => {
       const [res, status] = action.payload;
       if (status >= 300) {
@@ -74,8 +82,9 @@ export const slice = createSlice({
 
 export const {
   setBilling,
-//   config,
+  //   config,
   paymentMethods,
+  paymentMethodInUse,
   payments,
   paymentDetails,
   paymentLinks,
@@ -85,7 +94,9 @@ export const {
 //   const response = await fetch(`${SERVER_URL}/api/config`);
 //   dispatch(config(await response.json()));
 // };
-
+export const setPaymentMethodInUse = (type) => (dispatch) => {
+  dispatch(paymentMethodInUse(type));
+};
 export const getPaymentLinks = () => async (dispatch) => {
   const response = await fetch(`${SERVER_URL}/api/getPaymentLinks`, {
     method: "POST",

@@ -36,7 +36,7 @@ export function PayByLinkScreen(props) {
     const { error } = props.payment;
     if (error) {
       console.log(error);
-      Alert.alert("Error!", error.message, [{ text: "OK" }], {
+      Alert.alert("Error!", error, [{ text: "OK" }], {
         cancelable: true,
       });
     }

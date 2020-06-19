@@ -161,6 +161,7 @@ app.post("/api/initiatePayment", async (req, res) => {
       billingAddress: req.body.billingAddress,
       origin: req.body.origin,
     });
+    console.log(response);
     let paymentMethodType = req.body.paymentMethod.type;
     let resultCode = response.resultCode;
     let redirectUrl =
