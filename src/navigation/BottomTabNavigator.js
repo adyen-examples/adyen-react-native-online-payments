@@ -3,7 +3,7 @@ import * as React from "react";
 
 import TabBarIcon from "../components/TabBarIcon";
 import PayByLinkScreen from "../screens/PayByLinkScreen";
-import ComponentsScreen from "../screens/ComponentsScreen";
+import ComponentListScreen from "../screens/ComponentListScreen";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "PayByLink";
@@ -28,7 +28,7 @@ export default function BottomTabNavigator({ navigation, route }) {
       />
       <BottomTab.Screen
         name="Components"
-        component={ComponentsScreen}
+        component={ComponentListScreen}
         options={{
           title: "API only",
           tabBarIcon: ({ focused }) => (

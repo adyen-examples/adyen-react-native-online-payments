@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as WebBrowser from "expo-web-browser";
+import { connect } from "react-redux";
 import {
   Button,
   StyleSheet,
@@ -11,85 +12,93 @@ import {
 } from "react-native";
 
 import { Cart } from "../components/ShoppingCart";
-import { SERVER_URL } from "../constants/General";
+import { getPaymentLinks } from "../store/PaymentSlice";
 
-export default class PayByLinkScreen extends React.Component {
-  state = {
-    result: false,
-  };
+export function PayByLinkScreen(props) {
+  const [result, setResult] = React.useState(false);
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.state.result ? (
-          <View style={styles.infoText}>
-            <Text style={styles.helpMsg}>
-              Payment link opened. You can
-              <Text style={styles.linkText} onPress={this.handleHelpLink}>
-                {" "}
-                setup a webhook{" "}
-              </Text>
-              to handle the result.
-            </Text>
-            <View style={styles.payButtonContainer}>
-              <Button
-                onPress={this.handleBack}
-                title="Back"
-                color="#0ABF53"
-                accessibilityLabel="Checkout and Pay"
-              />
-            </View>
-          </View>
-        ) : (
-          <SafeAreaView style={styles.container}>
-            <Cart />
-            <View style={styles.payButtonContainer}>
-              <Button
-                onPress={this.handlePayByLink}
-                title="Pay now"
-                color="#0ABF53"
-                accessibilityLabel="Checkout and Pay"
-              />
-            </View>
-          </SafeAreaView>
-        )}
-      </View>
-    );
-  }
-
-  handlePayByLink = async () => {
-    try {
-      const response = await fetch(`${SERVER_URL}/api/getPaymentLinks`, {
-        method: "POST",
-      });
-      const data = await response.json();
-      if (data.url) {
-        let result = await WebBrowser.openBrowserAsync(data.url);
-        console.log(result);
+  // react to change in paymentLinksRes
+  React.useEffect(() => {
+    async function performAction() {
+      const { paymentLinksRes } = props.payment;
+      if (paymentLinksRes && paymentLinksRes.url) {
+        let result = await WebBrowser.openBrowserAsync(paymentLinksRes.url);
         if (["opened", "cancel", "dismiss"].includes(result.type)) {
-          this.setState({ result: true });
+          setResult(true);
         }
       }
-    } catch (err) {
-      console.log(err);
-      Alert.alert("Error!", err.message, [{ text: "OK" }], {
+    }
+    performAction();
+  }, [props.payment.paymentLinksRes]);
+
+  // react to change in error
+  React.useEffect(() => {
+    const { error } = props.payment;
+    if (error) {
+      console.log(error);
+      Alert.alert("Error!", error.message, [{ text: "OK" }], {
         cancelable: true,
       });
     }
+  }, [props.payment.error]);
+
+  const handlePayByLink = async () => {
+    props.getPaymentLinks();
   };
 
-  handleHelpLink = () => {
+  const handleHelpLink = () => {
     Linking.openURL("https://docs.adyen.com/development-resources/webhooks");
   };
 
-  handleBack = () => {
-    this.setState({ result: false });
+  const handleBack = () => {
+    setResult(false);
   };
+
+  return (
+    <View style={styles.container}>
+      {result ? (
+        <View style={styles.infoText}>
+          <Text style={styles.helpMsg}>
+            Payment link opened. You can
+            <Text style={styles.linkText} onPress={handleHelpLink}>
+              {" "}
+              setup a webhook{" "}
+            </Text>
+            to handle the result.
+          </Text>
+          <View style={styles.payButtonContainer}>
+            <Button
+              onPress={handleBack}
+              title="Back"
+              color="#0ABF53"
+              accessibilityLabel="Checkout and Pay"
+            />
+          </View>
+        </View>
+      ) : (
+        <SafeAreaView style={styles.container}>
+          <Cart />
+          <View style={styles.payButtonContainer}>
+            <Button
+              onPress={handlePayByLink}
+              title="Checkout"
+              color="#0ABF53"
+              accessibilityLabel="Checkout and Pay"
+            />
+          </View>
+        </SafeAreaView>
+      )}
+    </View>
+  );
 }
 
-PayByLinkScreen.navigationOptions = {
-  header: null,
-};
+const mapStateToProps = (state) => ({
+  payment: state.payment,
+});
+
+const mapDispatchToProps = { getPaymentLinks };
+
+export default connect(mapStateToProps, mapDispatchToProps)(PayByLinkScreen);
 
 const styles = StyleSheet.create({
   container: {

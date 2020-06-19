@@ -62,7 +62,7 @@ This will start the express server and print out the server URL
 npm run server
 ```
 
-3. Copy the server URL and set it as `SERVER_URL` in `src/Service.js`, it is the IP of the machine where you started the express backend server with `npm run server`. It will be the same IP used by [Expo](https://expo.io/) to run the React Native application as well when you run the next step
+3. Copy the server URL and set it as `SERVER_URL` in `src/store/PaymentSlice.js`, it is the IP of the machine where you started the express backend server with `npm run server`. It will be the same IP used by [Expo](https://expo.io/) to run the React Native application as well when you run the next step
 
 4. Open another terminal to the same location and start the React Native application using [Expo](https://expo.io/). You can run the command appropriate for the platform you like
 
