@@ -21,6 +21,7 @@ Demos of the following client-side integrations are currently available in this 
 **Note**: You need to [setup a webhook](https://docs.adyen.com/development-resources/webhooks) if you want to handle the results from Pay by Link.
 
 - [API only](https://docs.adyen.com/checkout/api-only)
+
   - [ ] Ideal
   - [x] Credit card [PCI compliant only]
 
