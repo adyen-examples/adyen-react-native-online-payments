@@ -11,6 +11,7 @@ import LinkingConfiguration from "./navigation/LinkingConfiguration";
 import ComponentScreen from "./screens/ComponentScreen";
 import CardScreen from "./screens/CardScreen";
 import IDealScreen from "./screens/IdealScreen";
+import ResultScreen from "./screens/ResultScreen";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export default function Main() {
               <Stack.Screen name="Component" component={ComponentScreen} />
               <Stack.Screen name="Card" component={CardScreen} />
               <Stack.Screen name="IDeal" component={IDealScreen} />
+              <Stack.Screen name="Result" component={ResultScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </View>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Button, View, SafeAreaView, Text } from "react-native";
+import { StyleSheet, Button, View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 
 import { Cart } from "../components/ShoppingCart";

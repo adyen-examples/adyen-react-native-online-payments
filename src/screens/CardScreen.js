@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
+import { errorAlert } from "../util/Alerts";
 import { initiatePayment } from "../store/PaymentSlice";
 
 export function CardScreen({ navigation, payment, initiatePayment }) {
@@ -25,13 +26,7 @@ export function CardScreen({ navigation, payment, initiatePayment }) {
 
   // react to change in error
   React.useEffect(() => {
-    const { error } = payment;
-    if (error) {
-      console.log(error);
-      Alert.alert("Error!", error, [{ text: "OK" }], {
-        cancelable: true,
-      });
-    }
+    errorAlert(payment.error);
   }, [payment.error]);
 
   const validateNumber = (txt) => {

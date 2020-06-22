@@ -6,11 +6,11 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
-  Alert,
   Text,
   Linking,
 } from "react-native";
 
+import { errorAlert } from "../util/Alerts";
 import { Cart } from "../components/ShoppingCart";
 import { getPaymentLinks } from "../store/PaymentSlice";
 
@@ -33,13 +33,7 @@ export function PayByLinkScreen(props) {
 
   // react to change in error
   React.useEffect(() => {
-    const { error } = props.payment;
-    if (error) {
-      console.log(error);
-      Alert.alert("Error!", error, [{ text: "OK" }], {
-        cancelable: true,
-      });
-    }
+    errorAlert(props.payment.error);
   }, [props.payment.error]);
 
   const handlePayByLink = async () => {

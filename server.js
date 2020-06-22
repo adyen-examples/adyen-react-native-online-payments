@@ -142,6 +142,7 @@ app.post("/api/initiatePayment", async (req, res) => {
   const shopperIP =
     req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
+  const [name, IP] = findIpAddress();
   try {
     // Ideally the data passed here should be computed based on business logic
     const response = await checkout.payments({
@@ -155,8 +156,8 @@ app.post("/api/initiatePayment", async (req, res) => {
         // @ts-ignore
         allow3DS2: true,
       },
-      //   returnUrl: "adyendemo://", // use this if deploying as standalone app
-      returnUrl: "exp://localhost:19000",
+      returnUrl: `exp://${IP}:19000/--/?`, // this URL is used when using with Expo in development
+      //   returnUrl: "expo.adyendemo://", // use this if deploying as standalone app in production
       browserInfo: req.body.browserInfo,
       paymentMethod: req.body.paymentMethod,
       billingAddress: req.body.billingAddress,

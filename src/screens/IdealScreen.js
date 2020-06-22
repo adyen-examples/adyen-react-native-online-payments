@@ -1,16 +1,12 @@
 import * as React from "react";
-import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Text,
-  Alert,
-} from "react-native";
+import { StyleSheet, Button, View, SafeAreaView, Text } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import { connect } from "react-redux";
 import { Picker } from "@react-native-community/picker";
+import { Linking } from "expo";
+import Constants from "expo-constants";
 
+import { errorAlert } from "../util/Alerts";
 import { initiatePayment } from "../store/PaymentSlice";
 
 export function IDealScreen({ navigation, payment, initiatePayment }) {
@@ -20,13 +16,7 @@ export function IDealScreen({ navigation, payment, initiatePayment }) {
 
   // react to change in error
   React.useEffect(() => {
-    const { error } = payment;
-    if (error) {
-      console.log(error);
-      Alert.alert("Error!", error, [{ text: "OK" }], {
-        cancelable: true,
-      });
-    }
+    errorAlert(payment.error);
   }, [payment.error]);
 
   // react to change in payment response
@@ -34,16 +24,45 @@ export function IDealScreen({ navigation, payment, initiatePayment }) {
     const { paymentRes } = payment;
     async function performAction() {
       if (paymentRes && validIssuer && startPayment) {
-        let result = await WebBrowser.openBrowserAsync(paymentRes.redirect.url);
-        if (["opened", "cancel", "dismiss"].includes(result.type)) {
-          //   setResult(true);
+        try {
+          addLinkingListener();
+
+          await WebBrowser.openBrowserAsync(paymentRes.redirect.url);
+          // https://github.com/expo/expo/issues/5555
+          if (Constants.platform.ios) {
+            removeLinkingListener();
+          }
+        } catch (err) {
+          errorAlert(err.message);
         }
       }
     }
     performAction();
   }, [payment.paymentRes]);
 
-  console.log(payment.paymentMethodInUse);
+  const handleRedirect = (event) => {
+    if (Constants.platform.ios) {
+      WebBrowser.dismissBrowser();
+    } else {
+      removeLinkingListener();
+    }
+
+    let data = Linking.parse(event.url);
+
+    if (data.queryParams && data.queryParams.type === "complete") {
+      navigation.navigate("Result", { params: data.queryParams });
+    } else {
+      errorAlert("Payment not complete");
+      console.log(data);
+    }
+  };
+  const addLinkingListener = () => {
+    Linking.addEventListener("url", handleRedirect);
+  };
+
+  const removeLinkingListener = () => {
+    Linking.removeEventListener("url", handleRedirect);
+  };
 
   const validateIssuer = (txt) => {
     setIssuer(txt.replace(/\s/g, ""));
@@ -83,7 +102,7 @@ export function IDealScreen({ navigation, payment, initiatePayment }) {
         >
           <Picker.Item label="" value="" />
           {getBanks().map((it) => (
-            <Picker.Item label={it.name} value={it.id} key={it.id}/>
+            <Picker.Item label={it.name} value={it.id} key={it.id} />
           ))}
         </Picker>
       </View>
