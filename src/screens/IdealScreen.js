@@ -7,9 +7,14 @@ import { Linking } from "expo";
 import Constants from "expo-constants";
 
 import { errorAlert } from "../util/Alerts";
-import { initiatePayment } from "../store/PaymentSlice";
+import { initiatePayment, clearError } from "../store/PaymentSlice";
 
-export function IDealScreen({ navigation, payment, initiatePayment }) {
+export function IDealScreen({
+  navigation,
+  payment,
+  initiatePayment,
+  clearError,
+}) {
   const [issuer, setIssuer] = React.useState("");
   const [validIssuer, setValidIssuer] = React.useState(false);
   const [startPayment, setStartPayment] = React.useState(false);
@@ -17,6 +22,7 @@ export function IDealScreen({ navigation, payment, initiatePayment }) {
   // react to change in error
   React.useEffect(() => {
     errorAlert(payment.error);
+    clearError();
   }, [payment.error]);
 
   // react to change in payment response
@@ -125,6 +131,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   initiatePayment,
+  clearError,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(IDealScreen);

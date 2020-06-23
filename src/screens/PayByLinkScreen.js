@@ -12,7 +12,7 @@ import {
 
 import { errorAlert } from "../util/Alerts";
 import { Cart } from "../components/ShoppingCart";
-import { getPaymentLinks } from "../store/PaymentSlice";
+import { getPaymentLinks, clearError } from "../store/PaymentSlice";
 
 export function PayByLinkScreen(props) {
   const [result, setResult] = React.useState(false);
@@ -34,6 +34,7 @@ export function PayByLinkScreen(props) {
   // react to change in error
   React.useEffect(() => {
     errorAlert(props.payment.error);
+    props.clearError();
   }, [props.payment.error]);
 
   const handlePayByLink = async () => {
@@ -90,7 +91,7 @@ const mapStateToProps = (state) => ({
   payment: state.payment,
 });
 
-const mapDispatchToProps = { getPaymentLinks };
+const mapDispatchToProps = { getPaymentLinks, clearError };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PayByLinkScreen);
 

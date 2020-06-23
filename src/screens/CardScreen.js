@@ -6,14 +6,18 @@ import {
   SafeAreaView,
   Text,
   TextInput,
-  Alert,
 } from "react-native";
 import { connect } from "react-redux";
 
 import { errorAlert } from "../util/Alerts";
-import { initiatePayment } from "../store/PaymentSlice";
+import { initiatePayment, clearError } from "../store/PaymentSlice";
 
-export function CardScreen({ navigation, payment, initiatePayment }) {
+export function CardScreen({
+  navigation,
+  payment,
+  initiatePayment,
+  clearError,
+}) {
   const [number, setNumber] = React.useState("");
   const [validNumber, setValidNumber] = React.useState(false);
   const [cvc, setCvc] = React.useState("");
@@ -27,7 +31,19 @@ export function CardScreen({ navigation, payment, initiatePayment }) {
   // react to change in error
   React.useEffect(() => {
     errorAlert(payment.error);
+    clearError();
   }, [payment.error]);
+
+  // react to change in payment response
+  React.useEffect(() => {
+    const { paymentRes } = payment;
+    async function performAction() {
+      if (paymentRes && paymentRes.pspReference) {
+        navigation.navigate("Result", { params: paymentRes });
+      }
+    }
+    performAction();
+  }, [payment.paymentRes]);
 
   const validateNumber = (txt) => {
     setNumber(txt.replace(/\s/g, ""));
@@ -124,7 +140,10 @@ export function CardScreen({ navigation, payment, initiatePayment }) {
         />
       </View>
       <View style={styles.cardItemContainer}>
-        <Text>Works only if you are fully PCI compliant</Text>
+        <Text>
+          Works only if you are fully PCI compliant. Contact support for
+          details.
+        </Text>
       </View>
       <View style={styles.payButtonContainer}>
         <Button
@@ -145,6 +164,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   initiatePayment,
+  clearError,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardScreen);

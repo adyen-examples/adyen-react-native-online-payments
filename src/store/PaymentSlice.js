@@ -14,6 +14,9 @@ export const slice = createSlice({
     paymentDetailsRes: null,
   },
   reducers: {
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
     paymentLinks: (state, action) => {
       const [res, status] = action.payload;
       if (status >= 300) {
@@ -63,8 +66,12 @@ export const {
   payments,
   paymentDetails,
   paymentLinks,
+  setError,
 } = slice.actions;
 
+export const clearError = () => (dispatch) => {
+  dispatch(setError(""));
+};
 export const setPaymentMethodInUse = (type) => (dispatch) => {
   dispatch(paymentMethodInUse(type));
 };
