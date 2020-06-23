@@ -97,9 +97,12 @@ app.post("/api/getPaymentMethods", async (req, res) => {
 // Get pay by link
 app.post("/api/getPaymentLinks", async (req, res) => {
   try {
+    const [name, IP] = findIpAddress();
     const response = await checkout.paymentLinks({
       merchantAccount: process.env.MERCHANT_ACCOUNT,
       reference: `${Date.now()}`,
+      returnUrl: `exp://${IP}:19000/--/?`, // this URL is used when using with Expo in development
+      //   returnUrl: "expo.adyendemo://", // use this if deploying as standalone app in production
       amount: {
         value: 1000,
         currency: "EUR",

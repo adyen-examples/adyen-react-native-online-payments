@@ -1,14 +1,9 @@
 import * as React from "react";
 import * as WebBrowser from "expo-web-browser";
 import { connect } from "react-redux";
-import {
-  Button,
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Text,
-  Linking,
-} from "react-native";
+import { Button, StyleSheet, View, SafeAreaView, Text } from "react-native";
+import { Linking } from "expo";
+import Constants from "expo-constants";
 
 import { errorAlert } from "../util/Alerts";
 import { Cart } from "../components/ShoppingCart";
@@ -22,9 +17,11 @@ export function PayByLinkScreen(props) {
     async function performAction() {
       const { paymentLinksRes } = props.payment;
       if (paymentLinksRes && paymentLinksRes.url) {
-        let result = await WebBrowser.openBrowserAsync(paymentLinksRes.url);
-        if (["opened", "cancel", "dismiss"].includes(result.type)) {
-          setResult(true);
+        addLinkingListener();
+        await WebBrowser.openBrowserAsync(paymentLinksRes.url);
+        // https://github.com/expo/expo/issues/5555
+        if (Constants.platform.ios) {
+          removeLinkingListener();
         }
       }
     }
@@ -36,6 +33,27 @@ export function PayByLinkScreen(props) {
     errorAlert(props.payment.error);
     props.clearError();
   }, [props.payment.error]);
+
+  const handleRedirect = (event) => {
+    if (Constants.platform.ios) {
+      WebBrowser.dismissBrowser();
+    } else {
+      removeLinkingListener();
+    }
+
+    let data = Linking.parse(event.url);
+    console.log(data);
+    if (data) {
+      setResult(true);
+    }
+  };
+  const addLinkingListener = () => {
+    Linking.addEventListener("url", handleRedirect);
+  };
+
+  const removeLinkingListener = () => {
+    Linking.removeEventListener("url", handleRedirect);
+  };
 
   const handlePayByLink = async () => {
     props.getPaymentLinks();
@@ -54,12 +72,12 @@ export function PayByLinkScreen(props) {
       {result ? (
         <View style={styles.infoText}>
           <Text style={styles.helpMsg}>
-            Payment link opened. You can
+            Payment process completed. You need to
             <Text style={styles.linkText} onPress={handleHelpLink}>
               {" "}
               setup a webhook{" "}
             </Text>
-            to handle the result.
+            to handle the result in the app.
           </Text>
           <View style={styles.payButtonContainer}>
             <Button
