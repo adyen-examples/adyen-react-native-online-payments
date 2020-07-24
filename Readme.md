@@ -47,12 +47,12 @@ git clone https://github.com/adyen-examples/adyen-react-native-online-payments.g
 npm install
 ```
 
-3. Create a `./.env` file with your [API key](https://docs.adyen.com/user-management/how-to-get-the-api-key), [Origin Key](https://docs.adyen.com/user-management/how-to-get-an-origin-key), and merchant account name (all credentials are in string format):
+3. Create a `./.env` file with your [API key](https://docs.adyen.com/user-management/how-to-get-the-api-key), [Client Key](https://docs.adyen.com/user-management/client-side-authentication), and merchant account name (all credentials are in string format):
 
 ```shell
 API_KEY="your_API_key_here"
 MERCHANT_ACCOUNT="your_merchant_account_here"
-ORIGIN_KEY="your_origin_key_here"
+CLIENT_KEY="your_client_key_here"
 ```
 
 2. Start the backend server:
